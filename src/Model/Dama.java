@@ -45,17 +45,28 @@ public class Dama extends Peca {
             colOffset = -1;
         }
         
-        if (quadX == oldQuadX || quadY == oldQuadY) {
-            //Movimento em linha reta
-            //Se for vertical
+//        if (quadX == oldQuadX || quadY == oldQuadY) {
+//            //Movimento em linha reta
+//            //Se for vertical
             if (quadX == oldQuadX) colOffset = 0;
             ///Se for diagonal
             if (quadY == oldQuadY) rowOffset = 0;
+        
+        //Verificar se há alguma peça no caminho (excetuando a própria posição inicial)
+        int y = oldQuadY + rowOffset;
+        for (int x = oldQuadX + colOffset; x != quadX || y != quadY; x += colOffset) {
+            System.out.printf("Verificando (%d, %d)\n", x, y);
+            if (this.model.findPeca(x*60, y*60) != null){
+                System.out.printf("Peca no caminho (%d, %d) %s\n", x, y, model.findPeca(x*60, y*60));
+                return false;
+            }
             
-            
-        } else {
-            //Movimento em diagonal
+            y += rowOffset;
         }
+            
+//        } else {
+//            //Movimento em diagonal
+//        }
         
         
         return true;
