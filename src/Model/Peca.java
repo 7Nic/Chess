@@ -63,6 +63,10 @@ public abstract class Peca {
             return false;
     }
     
+    public Cor getCor() {
+        return this.cor;
+    }
+    
     public int getQuadranteX() {
         return this.quadranteX;
     }

@@ -45,12 +45,10 @@ public class Dama extends Peca {
             colOffset = -1;
         }
         
-//        if (quadX == oldQuadX || quadY == oldQuadY) {
-//            //Movimento em linha reta
-//            //Se for vertical
-            if (quadX == oldQuadX) colOffset = 0;
+            //Se for vertical
+        if (quadX == oldQuadX) colOffset = 0;
             ///Se for diagonal
-            if (quadY == oldQuadY) rowOffset = 0;
+        if (quadY == oldQuadY) rowOffset = 0;
         
         //Verificar se há alguma peça no caminho (excetuando a própria posição inicial)
         int y = oldQuadY + rowOffset;
@@ -63,11 +61,6 @@ public class Dama extends Peca {
             
             y += rowOffset;
         }
-            
-//        } else {
-//            //Movimento em diagonal
-//        }
-        
         
         return true;
     }

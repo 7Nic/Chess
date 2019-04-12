@@ -87,6 +87,36 @@ public class ModelTabuleiro implements Observer{
         return null;
     }
     
+    public Peca findPecaBasedOnTurn(int x, int y, char turno) {
+        if (turno == 'P') {
+            for(Peca p : pecasBrancas){
+                if(p.inSquare(x,y)) {
+                    return p;
+                }
+            }
+            for(Peca p : pecasPretas){
+                if(p.inSquare(x,y)){
+                    return p;
+                }
+            }
+        } else {
+            for(Peca p : pecasPretas){
+                if(p.inSquare(x,y)) {
+                    return p;
+                }
+            }
+            for(Peca p : pecasBrancas){
+                if(p.inSquare(x,y)){
+                    return p;
+                }
+            }
+        }
+        
+        
+        
+        return null;
+    }
+    
     public void draw(Graphics2D g){
         //desenha pecas Brancas
         for(Peca p : pecasBrancas){
