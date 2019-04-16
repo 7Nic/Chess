@@ -87,7 +87,16 @@ public class ModelTabuleiro implements Observer{
         return null;
     }
     
+    /**
+     * Finds a piece of opposite color
+     * @param x
+     * @param y
+     * @param turno
+     * @return 
+     */
     public Peca findPecaBasedOnTurn(int x, int y, char turno) {
+//        x *=60;
+//        y *=60;
         if (turno == 'P') {
             for(Peca p : pecasBrancas){
                 if(p.inSquare(x,y)) {

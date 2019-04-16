@@ -19,17 +19,46 @@ public class Peao extends Peca{
     
     @Override
     public boolean validMove(int quadX, int quadY) {
+        //===========Verificação de possibilidade de captura (o movimento de captura é diferente do normal)===========
+        boolean droppingOnOppositeColor;
+        char turno;
+        if (this.cor == Peca.Cor.BRANCO) {
+            turno = 'B';
+        } else {
+            turno = 'C';
+        }
+        
+        //Se a posição não estiver vazia e a cor for diferente
+        if (this.model.findPecaBasedOnTurn(quadX, quadY, turno) != null && this.cor != this.model.findPecaBasedOnTurn(quadX, quadY, turno).getCor() ) {
+            droppingOnOppositeColor = true;
+        } else {
+            droppingOnOppositeColor = false;
+        }
+
+        //Se andou uma coluna para direita ou esquerda
+        if (quadX == this.getOldQuadX() + 1 || quadX == this.getOldQuadX() - 1) {
+            //Se for branco e estiver uma linha acima e a cor da outra peca for oposta
+            if ((this.cor == Peca.Cor.BRANCO && quadY == this.getOldQuadY() - 1) && droppingOnOppositeColor) {
+                return true;
+            } 
+            //Se for preto e estiver uma linha abaixo e a cor da outra peca for oposta
+            if ((this.cor == Peca.Cor.PRETO && quadY == this.getOldQuadY() + 1) && droppingOnOppositeColor){
+                return true;
+            }
+        }
+        
+        //===========Verificação de movimento válido sem captura===========
         if(quadX != this.getOldQuadX()) return false;
         
         if(this.cor == Peca.Cor.PRETO){
-            //Primeira jogada
+            //Primeira jogada preta
             if(this.getOldQuadY() == 1) {
                 if(quadY < this.getOldQuadY() + 1 || quadY > this.getOldQuadY() + 2 || (this.model.findPeca(quadX*60, 2*60) != null && this.model.findPeca(quadX*60, 2*60) != this)) return false;
             } else {
                 if(quadY != this.getOldQuadY() + 1) return false;
             }
         } else {
-            //Primeira jogada
+            //Primeira jogada branca
             if(this.getOldQuadY() == 6) {
                 if(quadY > this.getOldQuadY() - 1 || quadY < this.getOldQuadY() - 2 || this.model.findPeca(quadX*60, 5*60) != null) return false;
             } else {

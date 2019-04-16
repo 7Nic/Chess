@@ -94,6 +94,14 @@ public abstract class Peca {
         this.oldQuadY = y/60;
     }
     
+    public Cor oppositeColor() {
+        if (this.cor == Peca.Cor.BRANCO) {
+            return Peca.Cor.PRETO;
+        } else {
+            return Peca.Cor.BRANCO;
+        }
+    }
+    
     public abstract void draw(Graphics2D g);
     public abstract boolean validMove(int quadX, int quadY);
 }

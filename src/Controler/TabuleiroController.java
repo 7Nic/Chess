@@ -88,30 +88,7 @@ public class TabuleiroController implements  MouseListener, MouseMotionListener{
         System.out.println("jogador certo " + jogadorCerto);
         
         //Aqui é feita a verificação
-        //Como a peca muda a posicao juntamente com o mouse, no release a peça retornada no findPeca sera ela mesma, mas caso se tente sobrepor alguma peça, a função retornará outra peca, assim o movimento será invalidado
-        if((!(peca.validMove(e.getX()/60, e.getY()/60)) || model.findPecaBasedOnTurn(e.getX(), e.getY(), this.turno) !=  peca) || !jogadorCerto) {
-            if (model.findPecaBasedOnTurn(e.getX(), e.getY(), this.turno).getCor() == peca.getCor()) {
-                System.out.println("Inválido");
-                //Se as cores forem iguais o movimento é invalido
-                peca.setQuadrante(peca.getOldQuadX(), peca.getOldQuadY());
-                view.repaint();
-            } else {
-                //Se as cores forem diferentes deve-se capturar a peça
-                System.out.println("Capturar");
-                model.findPecaBasedOnTurn(e.getX(), e.getY(), this.turno).setQuadrante(15, 15);
-                peca.alterarOldQuad(e.getX(), e.getY());
-                view.repaint();
-                this.trocaTurno();
-            }
-        } else {
-            //Movimento válido normal
-            System.out.println("Válido");
-            peca.alterarOldQuad(e.getX(), e.getY());
-            this.trocaTurno();
-        }
-        
-        System.out.println("Sendo que a peça que eu achei foi " + model.findPecaBasedOnTurn(e.getX(), e.getY(), this.turno));
-        
+        verifyMovement(e, jogadorCerto);
         
 //=====================IMPLEMENTAR ESSA LÓGICA DE BAIXO =====================================
 //        if(!(peca.validMove(e.getX()/60, e.getY()/60))) {
@@ -143,6 +120,34 @@ public class TabuleiroController implements  MouseListener, MouseMotionListener{
 //        }
 
     }
+    
+    
+    public void verifyMovement(MouseEvent e, boolean jogadorCerto) {
+        //Como a peca muda a posicao juntamente com o mouse, no release a peça retornada no findPeca sera ela mesma, mas caso se tente sobrepor alguma peça, a função retornará outra peca, assim o movimento será invalidado
+        if((!(peca.validMove(e.getX()/60, e.getY()/60)) || model.findPecaBasedOnTurn(e.getX(), e.getY(), this.turno) !=  peca) || !jogadorCerto) {
+            if (model.findPecaBasedOnTurn(e.getX(), e.getY(), this.turno).getCor() == peca.getCor()) {
+                System.out.println("Inválido");
+                //Se as cores forem iguais o movimento é invalido
+                peca.setQuadrante(peca.getOldQuadX(), peca.getOldQuadY());
+                view.repaint();
+            } else {
+                //Se as cores forem diferentes deve-se capturar a peça
+                System.out.println("Capturar");
+                model.findPecaBasedOnTurn(e.getX(), e.getY(), this.turno).setQuadrante(15, 15);
+                peca.alterarOldQuad(e.getX(), e.getY());
+                view.repaint();
+                this.trocaTurno();
+            }
+        } else {
+            //Movimento válido normal
+            System.out.println("Válido");
+            peca.alterarOldQuad(e.getX(), e.getY());
+            this.trocaTurno();
+        }
+        
+        System.out.println("Sendo que a peça que eu achei foi " + model.findPecaBasedOnTurn(e.getX(), e.getY(), this.turno));
+        
+    }
 
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -167,5 +172,4 @@ public class TabuleiroController implements  MouseListener, MouseMotionListener{
         view.getMouseCoord().setLocation(x, y);
         view.repaint();
     }
-
 }
